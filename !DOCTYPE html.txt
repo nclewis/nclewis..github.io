@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Gusto Mediterraneo - N. C. Lewis (Nicola Caruso)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5f2d;
+            --secondary: #97bc62;
+            --accent: #d4a373;
+            --dark: #1a1a1a;
+            --light: #f9f7f2;
+            --olive: #808000;
+            --terracotta: #E2725B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.5rem 5%;
+            background: rgba(255,255,255,0.98);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "🫒";
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(151,188,98,0.1) 0%, transparent 70%);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.2s;
+        }
+
+        .hero-text .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--terracotta);
+            margin-bottom: 1rem;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: #555;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.4s;
+        }
+
+        .author-reveal {
+            background: rgba(255,255,255,0.8);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .author-reveal strong {
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.6s;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(44,95,45,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(44,95,45,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-showcase {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            background: linear-gradient(45deg, #2c5f2d, #97bc62);
+            border-radius: 10px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.2),
+                0 0 0 10px rgba(255,255,255,0.1);
+            transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.8s;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .book-showcase:hover {
+            transform: perspective(1000px) rotateY(-5deg) rotateX(0deg) scale(1.05);
+        }
+
+        .book-showcase .main-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .book-showcase .author {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .book-showcase .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: floatIcon 6s infinite ease-in-out;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Books Section */
+        .books-section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: var(--secondary);
+        }
+
+        .book-cover {
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: shine 20s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .book-cover h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            z-index: 1;
+            position: relative;
+        }
+
+        .book-cover .lang-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            z-index: 1;
+        }
+
+        .book-info {
+            padding: 2rem;
+        }
+
+        .book-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .book-author {
+            color: var(--terracotta);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .book-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .book-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .book-features li {
+            padding: 0.3rem 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .book-features li::before {
+            content: "✓ ";
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .book-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-amazon {
+            background: #ff9900;
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-amazon:hover {
+            background: #e68a00;
+            transform: scale(1.02);
+        }
+
+        .btn-review {
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-review:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(to bottom, #f9f7f2, #e8f5e9);
+            position: relative;
+        }
+
+        .reviews-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2397bc62' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .review-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .review-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--secondary);
+            opacity: 0.3;
+        }
+
+        .review-text {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .reviewer {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .stars {
+            color: #ffc107;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Request Review Section */
+        .request-section {
+            padding: 6rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .request-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2397bc62' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .request-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .request-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .request-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 2rem;
+            background: white;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .book-showcase {
+                width: 250px;
+                height: 375px;
+            }
+
+            .books-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .author-reveal {
+                text-align: left;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Il Gusto Mediterraneo</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#libro">Il Libro</a></li>
+                <li><a href="#edizioni">Edizioni</a></li>
+                <li><a href="#recensioni">Recensioni</a></li>
+                <li><a href="#contatti">Contatti</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <span class="floating-icon" style="top: 20%; left: 10%; animation-delay: 0s;">🍅</span>
+            <span class="floating-icon" style="top: 60%; left: 5%; animation-delay: 1s;">🫒</span>
+            <span class="floating-icon" style="top: 30%; right: 10%; animation-delay: 2s;">🐟</span>
+            <span class="floating-icon" style="top: 70%; right: 15%; animation-delay: 3s;">🍋</span>
+            <span class="floating-icon" style="top: 40%; left: 20%; animation-delay: 4s;">🌿</span>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Il Gusto Mediterraneo</h1>
+                <div class="subtitle">Un viaggio attraverso sapori, cultura e benessere</div>
+                
+                <div class="author-reveal">
+                    <strong>Di N. C. Lewis</strong><br>
+                    <em>Il mio pseudonimo letterario - il mio nome è Nicola Caruso</em>
+                </div>
+
+                <p>La Dieta Mediterranea non è solo un modello alimentare, ma un autentico stile di vita. In questo libro ti accompagno alla scoperta di ricette semplici, benefici scientifici e un approccio sostenibile per vivere meglio attraverso la meravigliosa semplicità del cibo mediterraneo.</p>
+                
+                <div class="cta-buttons">
+                    <a href="https://www.amazon.it/dp/B0GH1DBPSR" target="_blank" class="btn btn-primary">🛒 Acquista su Amazon</a>
+                    <a href="#recensioni" class="btn btn-secondary">⭐ Lascia una Recensione</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="book-showcase">
+                    <div class="main-title">Il Gusto<br>Mediterraneo</div>
+                    <div class="author">N. C. Lewis</div>
+                    <div class="badge">Edizione Italiana</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Section -->
+    <section class="books-section" id="libro">
+        <div class="container">
+            <h2 class="section-title fade-in">Il Libro</h2>
+            <p class="section-subtitle fade-in">Disponibile in tre lingue su Amazon</p>
+            
+            <div class="books-grid">
+                <!-- Edizione Italiana -->
+                <div class="book-card fade-in">
+                    <div class="book-cover">
+                        <h3>Il Gusto<br>Mediterraneo</h3>
+                        <div class="lang-badge">🇮🇹 Italiano</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Il Gusto Mediterraneo</h3>
+                        <div class="book-author">di N. C. Lewis (Nicola Caruso)</div>
+                        <p class="book-description">
+                            La Dieta Mediterranea come autentico stile di vita. Un viaggio che unisce tradizione secolare e scienza moderna, con la revisione scientifica del Dr. Antonio Caruso.
+                        </p>
+                        <ul class="book-features">
+                            <li>Ricette semplici, genuine e accessibili</li>
+                            <li>Benefici nutrizionali spiegati chiaramente</li>
+                            <li>Suggerimenti pratici per energia e vitalità</li>
+                            <li>Approccio sostenibile per ogni età</li>
+                        </ul>
+                        <div class="book-actions">
+                            <a href="https://www.amazon.it/dp/B0GH1DBPSR" target="_blank" class="btn-amazon">
+                                🛒 Acquista su Amazon.it
+                            </a>
+                            <a href="#" class="btn-review" onclick="openReviewModal('Il Gusto Mediterraneo - Italiano')">
+                                ✍️ Lascia una Recensione
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edizione Inglese -->
+                <div class="book-card fade-in">
+                    <div class="book-cover" style="background: linear-gradient(135deg, #d4a373, #97bc62);">
+                        <h3>The Mediterranean<br>Taste</h3>
+                        <div class="lang-badge">🇺🇸 English</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">The Mediterranean Taste</h3>
+                        <div class="book-author">by N. C. Lewis (Nicola Caruso)</div>
+                        <p class="book-description">
+                            "A Journey Through Flavors, Culture, and Longevity" - The complete guide to the Mediterranean lifestyle, now available for English readers worldwide.
+                        </p>
+                        <ul class="book-features">
+                            <li>Authentic Mediterranean recipes</li>
+                            <li>Science-based nutritional benefits</li>
+                            <li>Practical tips for daily wellness</li>
+                            <li>Sustainable approach for all ages</li>
+                        </ul>
+                        <div class="book-actions">
+                            <a href="https://www.amazon.com/Mediterranean-Taste-Journey-Through-Longevity/dp/B0GH779FXZ" target="_blank" class="btn-amazon">
+                                🛒 Buy on Amazon.com
+                            </a>
+                            <a href="#" class="btn-review" onclick="openReviewModal('The Mediterranean Taste - English')">
+                                ✍️ Leave a Review
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edizione Spagnola -->
+                <div class="book-card fade-in">
+                    <div class="book-cover" style="background: linear-gradient(135deg, #2c5f2d, #d4a373);">
+                        <h3>El Sabor<br>Mediterráneo</h3>
+                        <div class="lang-badge">🇪🇸 Español</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">El Sabor Mediterráneo</h3>
+                        <div class="book-author">de N. C. Lewis (Nicola Caruso)</div>
+                        <p class="book-description">
+                            La Dieta Mediterránea como estilo de vida auténtico. Descubre sabores, cultura y bienestar con el respaldo científico del Dr. Antonio Caruso.
+                        </p>
+                        <ul class="book-features">
+                            <li>Recetas auténticas y accesibles</li>
+                            <li>Beneficios nutricionales científicos</li>
+                            <li>Consejos prácticos para el bienestar</li>
+                            <li>Enfoque sostenible para todas las edades</li>
+                        </ul>
+                        <div class="book-actions">
+                            <a href="https://www.amazon.es/dp/B0GMHD8TCZ" target="_blank" class="btn-amazon">
+                                🛒 Comprar en Amazon.es
+                            </a>
+                            <a href="#" class="btn-review" onclick="openReviewModal('El Sabor Mediterráneo - Español')">
+                                ✍️ Dejar una Reseña
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scientific Review Section -->
+    <section class="reviews-section" id="edizioni">
+        <div class="container">
+            <h2 class="section-title fade-in">Revisione Scientifica</h2>
+            <p class="section-subtitle fade-in">Qualità e affidabilità garantite</p>
+            
+            <div class="review-cards" style="max-width: 800px; margin: 3rem auto;">
+                <div class="review-card fade-in" style="text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">👨‍⚕️</div>
+                    <h3 style="font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 1rem;">Dr. Antonio Caruso</h3>
+                    <p class="review-text" style="font-style: normal;">
+                        Tutte le edizioni de <strong>"Il Gusto Mediterraneo"</strong> includono la revisione scientifica del Dr. Antonio Caruso, garantendo che ogni informazione nutrizionale sia accurata, aggiornata e basata su evidenze scientifiche solide.
+                    </p>
+                    <p style="color: #666; font-size: 0.9rem;">
+                        Questo volume offre una guida chiara, attuale e completa per vivere meglio attraverso la meravigliosa semplicità del cibo mediterraneo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section" id="recensioni" style="background: linear-gradient(to bottom, #e8f5e9, #f9f7f2);">
+        <div class="container">
+            <h2 class="section-title fade-in">Cosa Dicono i Lettori</h2>
+            <p class="section-subtitle fade-in">Le vostre opinioni sono il mio carburante per continuare a scrivere</p>
+            
+            <div class="review-cards">
+                <div class="review-card fade-in">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Finalmente un libro che spiega la dieta mediterranea in modo scientifico ma accessibile. Le ricette sono deliziose e facili da preparare!"</p>
+                    <div class="reviewer">- Maria R.</div>
+                </div>
+                
+                <div class="review-card fade-in">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Ho perso 5 kg in due mesi senza sentirmi mai a dieta. Questo libro ha cambiato il mio approccio al cibo. Consigliatissimo!"</p>
+                    <div class="reviewer">- Luca B.</div>
+                </div>
+                
+                <div class="review-card fade-in">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Come nutrizionista, apprezzo l'approccio scientifico del Dr. Caruso. Un libro completo che consiglio ai miei pazienti."</p>
+                    <div class="reviewer">- Dr. Marco V.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Request Review Section -->
+    <section class="request-section">
+        <div class="request-content">
+            <h2>Hai Già Letto "Il Gusto Mediterraneo"?</h2>
+            <p>La tua opinione è preziosa! Una recensione su Amazon aiuta altri lettori a scoprire il libro e mi permette di continuare a creare contenuti utili per te.</p>
+            
+            <div class="lang-selector">
+                <a href="#" class="lang-btn" onclick="openReviewModal('Italiano')">🇮🇹 Recensione Italiana</a>
+                <a href="#" class="lang-btn" onclick="openReviewModal('English')">🇺🇸 English Review</a>
+                <a href="#" class="lang-btn" onclick="openReviewModal('Español')">🇪🇸 Reseña en Español</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contatti">
+        <div class="container">
+            <h2 class="section-title">Restiamo in Contatto</h2>
+            <p>Seguimi sui social per ricette esclusive, consigli e aggiornamenti</p>
+            <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                <em>N. C. Lewis (Nicola Caruso) - Autore de "Il Gusto Mediterraneo"</em>
+            </p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link" title="Facebook">f</a>
+                <a href="#" class="social-link" title="Instagram">📷</a>
+                <a href="#" class="social-link" title="Twitter">🐦</a>
+                <a href="#" class="social-link" title="Email">✉</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Il Gusto Mediterraneo - N. C. Lewis (Nicola Caruso). Tutti i diritti riservati.</p>
+        <p>Con revisione scientifica del Dr. Antonio Caruso</p>
+    </footer>
+
+    <!-- Review Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeReviewModal()">&times;</button>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 1rem;">Grazie per il tuo supporto! 🙏</h2>
+            <p style="margin-bottom: 2rem; color: #666;">Scegli l'edizione che hai letto e ti indirizzerò alla pagina Amazon per lasciare la recensione.</p>
+            
+            <form onsubmit="handleReviewSubmit(event)">
+                <div class="form-group">
+                    <label>Quale edizione hai letto?</label>
+                    <select id="bookSelect" required>
+                        <option value="">Seleziona un'edizione...</option>
+                        <option value="https://www.amazon.it/dp/B0GH1DBPSR#customerReviews">🇮🇹 Il Gusto Mediterraneo (Italiano)</option>
+                        <option value="https://www.amazon.com/Mediterranean-Taste-Journey-Through-Longevity/dp/B0GH779FXZ#customerReviews">🇺🇸 The Mediterranean Taste (English)</option>
+                        <option value="https://www.amazon.es/dp/B0GMHD8TCZ#customerReviews">🇪🇸 El Sabor Mediterráneo (Español)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Il tuo nome (opzionale)</label>
+                    <input type="text" placeholder="Come ti chiami?">
+                </div>
+                
+                <div class="form-group">
+                    <label>Vuoi lasciarmi un messaggio privato?</label>
+                    <textarea rows="3" placeholder="Scrivi qui il tuo feedback personale per l'autore..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Vai alla Recensione Amazon ➔</button>
+            </form>
+            
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #888; text-align: center;">
+                💡 Suggerimento: anche una recensione breve di 2-3 righe è molto apprezzata!<br>
+                La tua opinione onesta aiuta altri lettori a fare la scelta giusta.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Modal functions
+        function openReviewModal(edition = '') {
+            const modal = document.getElementById('reviewModal');
+            const select = document.getElementById('bookSelect');
+            
+            if (edition) {
+                // Pre-select the edition if provided
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].text.includes(edition)) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeReviewModal() {
+            const modal = document.getElementById('reviewModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleReviewSubmit(e) {
+            e.preventDefault();
+            const select = document.getElementById('bookSelect');
+            const url = select.value;
+            
+            if (url) {
+                // Open Amazon review page in new tab
+                window.open(url, '_blank');
+                closeReviewModal();
+                
+                // Show thank you message
+                setTimeout(() => {
+                    alert('Grazie mille per il tuo tempo! La tua recensione aiuta tantissimo. 🙏');
+                }, 500);
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('reviewModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('reviewModal')) {
+                closeReviewModal();
+            }
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add parallax effect to floating elements
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.floating-icon');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((el, index) => {
+                const speed = (index + 1) * 10;
+                const xOffset = (0.5 - x) * speed;
+                const yOffset = (0.5 - y) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
